@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/SkyFold'
+let g:netrw_dirhist_2='/Users/SkyFold/.vimhooks'
+let g:netrw_dirhist_3='/Users/SkyFold/git_projects/appengine-angular-seed-python-master'
+let g:netrw_dirhist_4='/Users/SkyFold/git_projects/appengine-angular-seed-python-master/app'
+let g:netrw_dirhist_5='/Users/SkyFold/git_projects/appengine-angular-seed-python-master'
+let g:netrw_dirhist_6='/Users/SkyFold/git_projects/appengine-angular-seed-python-master/app'

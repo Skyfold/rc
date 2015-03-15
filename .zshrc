@@ -31,6 +31,7 @@ export PATH="$HOME/.composer/vendor/bin:/usr/local/gnat/bin:/usr/local/texlive/2
 export MANPATH="/usr/local/CrossPack-AVR/man:$MANPATH"
 
 # Example aliases
+alias gitIgnoreAllUntrackedFiles="echo "$(git status --porcelain | grep '^??' | cut -c4-)" >>.gitignore"
 alias turnOffInternalKeyboard="sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 alias turnOnInternalKeyboard="sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 alias vi="nvim"

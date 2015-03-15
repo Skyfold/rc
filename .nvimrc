@@ -79,6 +79,7 @@ NeoBundle 'vim-pandoc/vim-pandoc-after'
 NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/unite.vim'
 " NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Valloric/YouCompleteMe'
 " let g:neocomplete#enable_at_startup = 1
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git' " git soruce for unite
@@ -148,6 +149,14 @@ NeoBundle 'chrisbra/NrrwRgn'          " :NR (Visual mode \nr) narrowing on selec
 NeoBundle 'dahu/vimple'
 " NeoBundle 'airblade/vim-rooter'       " Makes your current dir the .git file
 NeoBundle 'scrooloose/syntastic'      " syntax checking
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 1
 NeoBundle 'scrooloose/nerdtree'
     nmap <space>t :NERDTreeToggle<CR>
 
@@ -200,9 +209,6 @@ map <Space>h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> tr
 
 " This makes changing spelling errors faster
 nnoremap [s [sz=
-
-" Save mapping
-nnoremap <C-w> :wa<CR> :echo "All buffers have been saved"<CR>
 
 " Commands
 " ========================================================

@@ -148,6 +148,14 @@ NeoBundle 'chrisbra/NrrwRgn'          " :NR (Visual mode \nr) narrowing on selec
 NeoBundle 'dahu/vimple'
 " NeoBundle 'airblade/vim-rooter'       " Makes your current dir the .git file
 NeoBundle 'scrooloose/syntastic'      " syntax checking
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
 NeoBundle 'scrooloose/nerdtree'
     nmap <space>t :NERDTreeToggle<CR>
 
@@ -196,6 +204,9 @@ nnoremap <Space>d :Dash<CR>
 map <Space>h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+command! StartLog profile start profile.log | profile func * | profile file *
+command! EndLog profile pause | noautocmd qall!
 
 
 " This makes changing spelling errors faster

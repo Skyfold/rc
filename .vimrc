@@ -80,6 +80,7 @@ NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/unite.vim'
 " NeoBundle 'Shougo/neocomplete.vim'
 " let g:neocomplete#enable_at_startup = 1
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git' " git soruce for unite
 
@@ -254,12 +255,13 @@ if executable('ag')
         \ 'ag --follow --nocolor --nogroup --hidden -g ""'
 endif
 
+
 " grep {{{2
 nnoremap <space>/ :<C-u>Unite -no-empty grep <CR>
 
 " Yank history {{{2
-nnoremap <space>y :<C-u>Unite -start-insert history/yank<CR>
 nnoremap <space>r :<C-u>Unite -start-insert register<CR>
+nnoremap <space>y :<C-u>Unite -start-insert history/yank<CR>
 
 " Buffer navigation {{{2
 nnoremap <silent> <space>b :<C-u>Unite -start-insert -no-split buffer bookmark<CR>
@@ -272,7 +274,7 @@ nnoremap <silent> <space>e :<C-u>UniteWithCurrentDir -start-insert -no-split fil
 nnoremap <silent> <space>s :<C-u>Unite -start-insert source<CR>
 
 " lets you're gf search from current dir
-noremap <silent> gf :<C-u>UniteWithCursorWord -no-split -start-insert -immediately file_rec file_include file/new directory/new<CR>
+noremap <silent> gf :<C-u>UniteWithCursorWord -no-split -start-insert -immediately file_rec file/new directory/new<CR>
 
 nnoremap <silent> <space>; :<C-u>Unite -here -start-insert command<CR>
 

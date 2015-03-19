@@ -16,6 +16,7 @@ set t_Co=256            " shouldn't need, but just to make sure
 set splitbelow          " new hoz splits go below
 set splitright          " new vert splits go right
 set notimeout           " don't timeout on mappings
+set formatprg="PARINIT='rTbgqR B=.,?_A_a Q=_s>|' par\ -w72" " Use par for prettier line formatting
 
 set expandtab
 set softtabstop=4       " when hitting <BS>, pretend like a tab is removed, even if spaces
@@ -29,6 +30,7 @@ set copyindent          " copy the previous indentatino on autoindenting
 set ttimeout            " do timeout on terminal key codes
 set timeoutlen=100      " timeout after 100 msec
 set wmh=0               " minimal height of a window
+set autoread           " Sets how many lines of history VIM has to remember
 
 filetype plugin indent on
 set incsearch
@@ -107,37 +109,36 @@ NeoBundle 'git://github.com/kmnk/vim-unite-giti.git' " git soruce for unite
 " NeoBundle 'lervag/vim-latex'
 
 " Haskell
-NeoBundle 'dag/vim2hs' " syntax highlighting at more
+NeoBundle 'Twinside/vim-haskellFold'
+NeoBundle 'raichoo/haskell-vim'
+NeoBundle 'enomsg/vim-haskellConcealPlus'
+NeoBundle 'Twinside/vim-hoogle'
 NeoBundle 'eagletmt/ghcmod-vim' " ghcmod for vim
+    autocmd FileType haskell let &formatprg="stylish-haskell"
 NeoBundle 'eagletmt/neco-ghc' " Omni completion for Haskell
-NeoBundle 'pbrisbin/vim-syntax-shakespeare' " Shakespear Syntax
-" NeoBundle 'kana/vim-textobj-indent' " Layout as text object
 
 "typing {{{2
 NeoBundle 'thanthese/Tortoise-Typing'
 
 " colorschemes {{{2
 NeoBundle 'sickill/vim-monokai'
-NeoBundle 'bling/vim-airline'
-  set laststatus=2
-  let g:airline_powerline_fonts = 1
-  let g:airline_theme = "powerlineish"
-NeoBundle 'edkolev/tmuxline.vim'
+" NeoBundle 'bling/vim-airline'
+"  set laststatus=2
+"  let g:airline_powerline_fonts = 1
+"  let g:airline_theme = "powerlineish"
+"NeoBundle 'edkolev/tmuxline.vim'
 
 " Web related plugins
 " NeoBundle 'mattn/emmet-vim'
-
-" PHP plugins {{{2
-" NeoBundle 'm2mdas/phpcomplete-extended-laravel'
-" NeoBundle 'm2mdas/phpcomplete-extended'
-"  autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 
 " Tag generation
 " NeoBundle 'xolox/vim-misc'            " a dependency
 " NeoBundle 'xolox/vim-easytags'
 
 " other plugins
+NeoBundle 'vim-scripts/Rename'
 " NeoBundle 'dahu/LearnVim'             " Learn vim the way of the warriorLazy
+NeoBundle 'majutsushi/tagbar'           " Tagbar: a class outline viewer for Vim
 NeoBundle 'reedes/vim-wordy'          " wordy
 NeoBundle 'chrisbra/vim-diff-enhanced' " better diff
 " NeoBundle 'tpope/vim-fugitive'
@@ -158,7 +159,7 @@ NeoBundle 'scrooloose/syntastic'      " syntax checking
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 1
 NeoBundle 'scrooloose/nerdtree'
-    nmap <space>t :NERDTreeToggle<CR>
+    nmap <space>n :NERDTreeToggle<CR>
 
 " Quick editing
 NeoBundle 'tpope/vim-surround' " type ysiw]
@@ -197,7 +198,6 @@ autocmd FileType vim autocmd FilterWritePre * :call TrimWhiteSpace()
 " mappings {{{1
 " ========================================================
 " :w !sudo tee % (very usefull)
-nnoremap <Space>d :Dash<CR>
 
 " This is made to debug hilighting issues. The Trans is somehow the trasparent
 " group (I think) and the Lo is the general or more broad group that the
@@ -222,12 +222,20 @@ command! YankFullPath let @+ = expand("%:p")
 " just filename
 command! YankFilename let @+ = expand("%:t")
 
+" Echo filename
+command! EchoFileName echo "You're editing " bufname("%")
+
 
 " split screen navigation
-nnoremap <C-J> <C-W>j
+nnoremap <CR> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 nnoremap <BS> <C-W>h
+
+" Usefull
+nnoremap ,d :b#<bar>bd#<CR>
+nnoremap <space>t :TagbarToggle<CR>
+nnoremap <Space>h :Dash<CR>
 
 " Unite Keybindings {{{1
 " ===================================================
@@ -260,14 +268,15 @@ nnoremap <space>r :<C-u>Unite -start-insert register<CR>
 nnoremap <silent> <space>b :<C-u>Unite -start-insert -no-split buffer bookmark<CR>
 
 " File navigation {{{2
-nnoremap <silent> <space>pe :<C-u>UniteWithInputDirectory -start-insert -no-split file <CR>
+nnoremap <silent> <space>de :<C-u>UniteWithInputDirectory -start-insert -no-split file <CR>
 nnoremap <silent> <space>e :<C-u>UniteWithCurrentDir -start-insert -no-split file_rec/async<CR>
+nnoremap <silent> <space>ce :<C-u>UniteWithCurrentDir -start-insert -no-split file directory <CR>
 
 " <space>nite sources {{{2
 nnoremap <silent> <space>s :<C-u>Unite -start-insert source<CR>
 
 " lets you're gf search from current dir
-noremap <silent> gf :<C-u>UniteWithCursorWord -no-split -start-insert -immediately file_rec file_include file/new directory/new<CR>
+noremap <silent> gf :<C-u>UniteWithCursorWord -no-split -start-insert -immediately file_rec file/new directory/new<CR>
 
 nnoremap <silent> <space>; :<C-u>Unite -here -start-insert command<CR>
 

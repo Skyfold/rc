@@ -1,4 +1,4 @@
-" General Settings {{{
+" General Settings {{{1
 " ===========================================================
 
 "these two turn off the beeps and screen flashing
@@ -6,16 +6,19 @@ autocmd GUIEnter * set vb t_vb=
 autocmd VimEnter * set vb t_vb=
 
 set mouse=a             " lets you scroll
+" set clipboard=unnamed   " should fix clipboard in tmux
+let mapleader = ","
 
 set visualbell          " don't beep
 set noerrorbells        " don't beep
-set nowrapscan
+set history=1000        " remeber all the history
 
 set linespace=10        " just add padding between lines
 set t_Co=256            " shouldn't need, but just to make sure
 set splitbelow          " new hoz splits go below
 set splitright          " new vert splits go right
 set notimeout           " don't timeout on mappings
+set formatprg="PARINIT='rTbgqR B=.,?_A_a Q=_s>|' par\ -w72" " Use par for prettier line formatting
 
 set expandtab
 set softtabstop=4       " when hitting <BS>, pretend like a tab is removed, even if spaces
@@ -29,6 +32,7 @@ set copyindent          " copy the previous indentatino on autoindenting
 set ttimeout            " do timeout on terminal key codes
 set timeoutlen=100      " timeout after 100 msec
 set wmh=0               " minimal height of a window
+set autoread           " Sets how many lines of history VIM has to remember
 
 filetype plugin indent on
 set incsearch
@@ -38,13 +42,12 @@ set backspace=2         " sane backsapce
 
 set path=.,,inc,src,/usr/include,/usr/local/include
 
-map q: :q
+nnoremap q: :q
 map Q <Nop>
 syntax on
 set nocompatible        " be iMproved, required
 filetype off            " require
 "
-" {{{
 " NeoBundle {{{1
 " ===========================================================
 set runtimepath+=~/.vim/bundle/neobundle.vim
@@ -54,15 +57,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Movement plugins {{{2
 NeoBundle 'kristijanhusak/vim-multiple-cursors'
-" function! Multiple_cursors_before()
-"     exe 'NeoCompleteLock'
-"     echo 'Disabled autocomplete'
-" endfunction
-"
-" function! Multiple_cursors_after()
-"     exe 'NeoCompleteUnlock'
-"     echo 'Enabled autocomplete'
-" endfunction
+function! Multiple_cursors_before()
+    exe 'NeoCompleteLock'
+    echo 'Disabled autocomplete'
+endfunction
+
+function! Multiple_cursors_after()
+    exe 'NeoCompleteUnlock'
+    echo 'Enabled autocomplete'
+endfunction
 
 NeoBundle 'tpope/vim-rsi'                               " :! editing and insert mode
 
@@ -78,9 +81,8 @@ NeoBundle 'vim-pandoc/vim-pandoc-after'
 " Shugo plugins {{{2
 NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/unite.vim'
-" NeoBundle 'Shougo/neocomplete.vim'
-" let g:neocomplete#enable_at_startup = 1
-NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neocomplete.vim'
+    let g:neocomplete#enable_at_startup = 1
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git' " git soruce for unite
 
@@ -107,18 +109,26 @@ NeoBundle 'git://github.com/kmnk/vim-unite-giti.git' " git soruce for unite
 " NeoBundle 'lervag/vim-latex'
 
 " Haskell
-NeoBundle 'dag/vim2hs' " syntax highlighting at more
-NeoBundle 'eagletmt/ghcmod-vim' " ghcmod for vim
+NeoBundle 'Twinside/vim-haskellFold'
+" NeoBundle 'raichoo/haskell-vim'
+"    let g:haskell_enable_quantification = 1
+"    let g:haskell_enable_recursivedo = 1
+"    let g:haskell_enable_arrowsyntax = 1
+"    let g:haskell_enable_pattern_synonyms = 1
+"    let g:haskell_enable_typeroles = 1
+" NeoBundle 'enomsg/vim-haskellConcealPlus'
+" NeoBundle 'Twinside/vim-hoogle'
+" NeoBundle 'eagletmt/ghcmod-vim' " ghcmod for vim
+    autocmd FileType haskell let &formatprg="stylish-haskell"
 NeoBundle 'eagletmt/neco-ghc' " Omni completion for Haskell
-NeoBundle 'pbrisbin/vim-syntax-shakespeare' " Shakespear Syntax
-" NeoBundle 'kana/vim-textobj-indent' " Layout as text object
 
 "typing {{{2
 NeoBundle 'thanthese/Tortoise-Typing'
 
 " colorschemes {{{2
+NeoBundle 'duythinht/inori'
 NeoBundle 'sickill/vim-monokai'
-NeoBundle 'bling/vim-airline'
+ NeoBundle 'bling/vim-airline'
   set laststatus=2
   let g:airline_powerline_fonts = 1
   let g:airline_theme = "powerlineish"
@@ -127,36 +137,33 @@ NeoBundle 'edkolev/tmuxline.vim'
 " Web related plugins
 " NeoBundle 'mattn/emmet-vim'
 
-" PHP plugins {{{2
-" NeoBundle 'm2mdas/phpcomplete-extended-laravel'
-" NeoBundle 'm2mdas/phpcomplete-extended'
-"  autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
-
 " Tag generation
 " NeoBundle 'xolox/vim-misc'            " a dependency
 " NeoBundle 'xolox/vim-easytags'
 
 " other plugins
+" NeoBundle 'vim-scripts/Rename'
+" NeoBundle 'scrooloose/nerdcommenter'
 " NeoBundle 'dahu/LearnVim'             " Learn vim the way of the warriorLazy
 NeoBundle 'reedes/vim-wordy'          " wordy
 NeoBundle 'chrisbra/vim-diff-enhanced' " better diff
 " NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'christoomey/vim-tmux-navigator'
 " NeoBundle 'ahw/vim-hooks'             " Vim-hooks so you can run commands when you save things (and more)
-NeoBundle 'vim-scripts/gnupg.vim'     " This lets you decript gpg files in vim and edit them
+" NeoBundle 'vim-scripts/gnupg.vim'     " This lets you decript gpg files in vim and edit them
 NeoBundle 'rizzatti/dash.vim'         " documentation the way it was meant
 NeoBundle 'chrisbra/NrrwRgn'          " :NR (Visual mode \nr) narrowing on selected text
 NeoBundle 'dahu/vimple'
-" NeoBundle 'airblade/vim-rooter'       " Makes your current dir the .git file
-NeoBundle 'scrooloose/syntastic'      " syntax checking
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
 
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
+" NeoBundle 'scrooloose/syntastic'      " syntax checking
+"    set statusline+=%#warningmsg#
+"    set statusline+=%{SyntasticStatuslineFlag()}
+"    set statusline+=%*
+"
+"    let g:syntastic_always_populate_loc_list = 1
+"    let g:syntastic_auto_loc_list = 1
+"    let g:syntastic_check_on_open = 1
+"    let g:syntastic_check_on_wq = 1
 NeoBundle 'scrooloose/nerdtree'
     nmap <space>t :NERDTreeToggle<CR>
 
@@ -167,7 +174,7 @@ NeoBundle 'Lokaltog/vim-easymotion'   " Make motions soo fast
     map s <Plug>(easymotion-s)
 
 " Fuzzy completion for search
-NeoBundle 'gelguy/Cmd2.vim'
+" NeoBundle 'gelguy/Cmd2.vim'
 
 call neobundle#end()
 filetype plugin indent on    " required
@@ -197,7 +204,6 @@ autocmd FileType vim autocmd FilterWritePre * :call TrimWhiteSpace()
 " mappings {{{1
 " ========================================================
 " :w !sudo tee % (very usefull)
-nnoremap <Space>d :Dash<CR>
 
 " This is made to debug hilighting issues. The Trans is somehow the trasparent
 " group (I think) and the Lo is the general or more broad group that the
@@ -206,19 +212,10 @@ map <Space>h :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> tr
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-command! StartLog profile start profile.log | profile func * | profile file *
-command! EndLog profile pause | noautocmd qall!
-
-
-" This makes changing spelling errors faster
-nnoremap [s [sz=
-
-" Save mapping
-nnoremap <C-w> :wa<CR> :echo "All buffers have been saved"<CR>
-
 " Commands
 " ========================================================
 command! ChangeToCurrentDir cd %:p:h
+
 " relative path
 command! YankRelativePath let @+ = expand("%")
 
@@ -228,17 +225,28 @@ command! YankFullPath let @+ = expand("%:p")
 " just filename
 command! YankFilename let @+ = expand("%:t")
 
-
 " split screen navigation
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
-nnoremap <BS> <C-W>h
+nnoremap <C-H> <C-W>h
+
+" Usefull
+nnoremap ,d :b#<bar>bd#<CR>
+nnoremap <Space>d :Dash<CR>
+nnoremap j gj
+nnoremap k gk
+
+" copy comamnds
+vnoremap <D-c> "*y
+nnoremap <D-v> "*p
 
 " Unite Keybindings {{{1
 " ===================================================
 
 let g:unite_source_history_yank_enable = 1
+let g:unite_source_history_unite_limit = 10000
+let g:unite_source_history_yank_save_clipboard = 1
 let g:unite_force_overwrite_statusline = 0
 let g:unite_source_rec_max_cache_files = 10000
 
@@ -255,20 +263,20 @@ if executable('ag')
         \ 'ag --follow --nocolor --nogroup --hidden -g ""'
 endif
 
-
 " grep {{{2
 nnoremap <space>/ :<C-u>Unite -no-empty grep <CR>
 
 " Yank history {{{2
-nnoremap <space>r :<C-u>Unite -start-insert register<CR>
-nnoremap <space>y :<C-u>Unite -start-insert history/yank<CR>
+inoremap <C-Y> <C-O>:<C-u>Unite -start-insert history/yank<CR>
+inoremap <C-R> <space><C-O>:Unite -start-insert register<CR>
 
 " Buffer navigation {{{2
 nnoremap <silent> <space>b :<C-u>Unite -start-insert -no-split buffer bookmark<CR>
 
 " File navigation {{{2
-nnoremap <silent> <space>pe :<C-u>UniteWithInputDirectory -start-insert -no-split file <CR>
+nnoremap <silent> <space>de :<C-u>UniteWithInputDirectory -start-insert -no-split file <CR>
 nnoremap <silent> <space>e :<C-u>UniteWithCurrentDir -start-insert -no-split file_rec/async<CR>
+nnoremap <silent> <space>ce :<C-u>UniteWithCurrentDir -start-insert -no-split file directory <CR>
 
 " <space>nite sources {{{2
 nnoremap <silent> <space>s :<C-u>Unite -start-insert source<CR>

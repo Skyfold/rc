@@ -25,28 +25,35 @@ antigen apply
 export C_INCLUDE_PATH="/usr/local/CrossPack-AVR/include:$C_INCLUDE_PATH"
 
 # PATH
+export PATH="$HOME/.cabal/bin:$PATH"
 export PATH="$HOME/.composer/vendor/bin:/usr/local/gnat/bin:/usr/local/texlive/2014/bin/x86_64-darwin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/bin:/usr/local/bin:/usr/local/CrossPack-AVR/bin:/Users/SkyFold/.rvm/:$PATH"
+
+# Add GHC 7.10.1 to the PATH, via https://ghcformacosx.github.io/
+export GHC_DOT_APP="/Applications/ghc-7.10.1.app"
+if [ -d "$GHC_DOT_APP" ]; then
+  export PATH="${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
+fi
 
 # MANPATH
 export MANPATH="/usr/local/CrossPack-AVR/man:$MANPATH"
 
 # Example aliases
+alias scanLocalSubnet="nmap -p 22 --open -sV 10.0.0.0/24 > sshservers"
 alias gitIgnoreAllUntrackedFiles="echo "$(git status --porcelain | grep '^??' | cut -c4-)" >>.gitignore"
 alias turnOffInternalKeyboard="sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
 alias turnOnInternalKeyboard="sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
-alias vi="nvim"
-alias v="nvim"
+alias vi="vim"
 alias chrome="open -a /Applications/Google\ Chrome.app"
 alias fire="open -a /Applications/Firefox.app"
 alias webit="wget -pkb"
 alias 3300ubuntu="/Applications/VirtualBox.app/Contents/MacOS/VBoxHeadless -s 3300ubuntu&"
 alias ubuntu_server="/Applications/VirtualBox.app/Contents/MacOS/VBoxHeadless -s ubuntu_server&"
+alias Fedora="/Applications/VirtualBox.app/Contents/MacOS/VBoxHeadless -s Fedora&"
 alias pin="ping google.com"
-alias ls="ls --color"
-alias l="ls"
+alias l="ls --color"
 
 # Env variables
-export EDITOR='nvim'
+export EDITOR='vim'
 export PKG_CONFIG_PATH="/opt/X11/lib/pkgconfig/"
 
 ## nvm config (Node Version manager)
@@ -68,9 +75,12 @@ eval `dircolors ~/.dir_colors/dircolors.ansi-dark`
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Make Zsh awsome
+zle -N zle-line-init
+zle -N zle-keymap-select
+
 ## switch between vim easily
 foreground-vi() {
-    fg %nvim
+    fg %vim
 }
 zle -N foreground-vi
 bindkey '^Z' foreground-vi

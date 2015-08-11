@@ -15,13 +15,8 @@ set number
 
 " Colors
 let g:solarized_termcolors=256
-if strftime("%H") < 12
-    set background=dark
-    colorscheme solarized
-else
-    set background=light
-    colorscheme solarized
-endif
+set background=dark
+colorscheme solarized
 
 " Normal Settings
 set splitbelow          " new hoz splits go below

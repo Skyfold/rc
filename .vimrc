@@ -1,14 +1,14 @@
-" Plugins
 call plug#begin('~/.vim/plugged')
 
 Plug 'jceb/vim-orgmode', { 'for' : 'org' }
-Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-speeddating' "( ) [] {} plugin
 Plug 'altercation/vim-colors-solarized'
 Plug 'Valloric/YouCompleteMe', { 'do': 'yes \| ./install.sh' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'christoomey/vim-tmux-navigator'
     let g:tmux_navigator_save_on_switch = 1
 Plug 'tpope/vim-vinegar'
+Plug 'epeli/slimux'
 
 call plug#end()
 
